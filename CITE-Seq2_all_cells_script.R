@@ -76,10 +76,6 @@ swatch(col_con2)
 CITESeq2_plain.h5seurat <- LoadH5Seurat("CITESeq2_plain.h5seurat") #30843 cells
 head(CITESeq2_plain.h5seurat[[]])
 
-CITESeq2_final.h5seurat <- LoadH5Seurat("CITESeq2_final.h5seurat") #30843cells
-head(CITESeq2_final.h5seurat[[]])
-DimPlot(CITESeq2_final.h5seurat, reduction = "wnn.umap")
-
 All_cells <- CITESeq2_plain.h5seurat
 head(All_cells[[]])
 meta_data <- All_cells[[]]

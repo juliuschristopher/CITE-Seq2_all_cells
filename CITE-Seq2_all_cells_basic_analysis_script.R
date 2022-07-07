@@ -72,7 +72,7 @@ col_con2 <-as.character(col_con2)
 swatch(col_con2)
 
 ##Load data##
-All_cells <- LoadH5Seurat("CITESeq2_plain.h5seurat")
+All_cells <- LoadH5Seurat("CITE-Seq2_all_cells.h5seurat")
 All_cells$seurat_clusters <- All_cells$wsnn_res.0.7
 Idents(All_cells) <- All_cells$seurat_clusters
 
