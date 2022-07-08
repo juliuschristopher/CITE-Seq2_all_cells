@@ -120,6 +120,51 @@ CTLA4 <- FeaturePlot(All_cells, features = "Ctla4", reduction = "adt.umap", cols
 ##Find all markers##
 All_markers <- FindAllMarkers(All_cells, assay = "ADT", logfc.threshold = 0.25, test.use = "wilcox")
 
+#Cluster 0 - Follicular B cells 
+All_cells_ADT_c0 <- FindMarkers(All_cells, ident.1 = 0, assay = "ADT")
+All_cells_ADT_c0 <- All_cells_ADT_c0 %>%
+  filter(p_val_adj <= 0.05) %>%
+  arrange(desc(avg_log2FC))
+
+All_cells_RNA_c0 <- FindMarkers(All_cells, ident.1 = 0, assay = "RNA")
+All_cells_RNA_c0 <- All_cells_RNA_c0 %>%
+  filter(p_val_adj <= 0.05) %>%
+  arrange(desc(avg_log2FC))
+
+DefaultAssay(All_cells)<-"RNA"
+Allcells_TFIDF_c0_genes <- WhichCells(object = All_cells, ident = "0")
+Allcells_TFIDF_c0 <- tfidf(GetAssayData(All_cells), Allcells_TFIDF_c0_genes, colnames(All_cells))
+
+
+#Cluster 1 - FO B cells
+All_cells_ADT_c1 <- FindMarkers(All_cells, ident.1 = 1, assay = "ADT")
+All_cells_ADT_c1 <- All_cells_ADT_c1 %>%
+  filter(p_val_adj <= 0.05) %>%
+  arrange(desc(avg_log2FC))
+
+All_cells_RNA_1 <- FindMarkers(All_cells, ident.1 = 1, assay = "RNA")
+All_cells_RNA_c1 <- All_cells_RNA_1 %>%
+  filter(p_val_adj <= 0.05) %>%
+  arrange(desc(avg_log2FC))
+
+DefaultAssay(All_cells)<-"RNA"
+Allcells_TFIDF_c1_genes <- WhichCells(object = All_cells, ident = "1")
+Allcells_TFIDF_c1 <- tfidf(GetAssayData(All_cells), Allcells_TFIDF_c1_genes, colnames(All_cells))
+
+FeaturePlot(All_cells, features = "Ighe", reduction = "adt.umap")
+VlnPlot(All_cells, features = "Ighe")
+
+#Cluster 4
+All_cells_ADT_c4 <- FindMarkers(All_cells, ident.1 = 4, assay = "ADT")
+All_cells_ADT_c4 <- All_cells_ADT_c4 %>%
+  filter(p_val_adj <= 0.05) %>%
+  arrange(desc(avg_log2FC))
+
+All_cells_RNA_4 <- FindMarkers(All_cells, ident.1 = 4, assay = "RNA")
+All_cells_RNA_c4 <- All_cells_RNA_4 %>%
+  filter(p_val_adj <= 0.013) %>%
+  arrange(desc(avg_log2FC))
+
 #Cluster 5 - Memory B cells
 All_cells_ADT_c5 <- FindMarkers(All_cells, ident.1 = 5, assay = "ADT")
 All_cells_ADT_c5 <- All_cells_ADT_c5 %>%
@@ -139,20 +184,22 @@ All_cells_ADT_c13 <- All_cells_ADT_c13 %>%
 
 All_cells_RNA_c13 <- FindMarkers(All_cells, ident.1 = 13, assay = "RNA")
 All_cells_RNA_c13 <- All_cells_RNA_c13 %>%
-  filter(p_val_adj <= 0.013) %>%
-  arrange(desc(avg_log2FC))
-
-#Cluster 4
-All_cells_ADT_c4 <- FindMarkers(All_cells, ident.1 = 4, assay = "ADT")
-All_cells_ADT_c4 <- All_cells_ADT_c4 %>%
   filter(p_val_adj <= 0.05) %>%
   arrange(desc(avg_log2FC))
 
-All_cells_RNA_4 <- FindMarkers(All_cells, ident.1 = 4, assay = "RNA")
-All_cells_RNA_c4 <- All_cells_RNA_4 %>%
-  filter(p_val_adj <= 0.013) %>%
-  arrange(desc(avg_log2FC))
+##Comparison of CLusters##
+#C1 vs C0
+c1_vs_c0_abs <- FindMarkers(ALl_cells, ident.1 = 1, ident.2 = 0, assay = "ADT")
+c0_vs_c1_abs <- FindMarkers(All_cells, ident.1 = 0, ident.2 = 1, assay = "ADT")
 
+c1_vs_c0_rna <- FindMarkers(All_cells, ident.1 = 1, ident.2 = 0, assay = "RNA")
+c1_vs_c0_rna <- c1_vs_c0_rna %>%
+  filter(p_val_adj <= 0.05) %>%
+  arrange(desc(avg_log2FC))
+c0_vs_c1_rna <- FindMarkers(All_cells, ident.1 = 0, ident.2 = 1, assay = "RNA")
+c0_vs_c1_rna <- c0_vs_c1_rna %>%
+  filter(p_val_adj <= 0.05) %>%
+  arrange(desc(avg_log2FC))
 
 DefaultAssay(All_cells)<-"RNA"
 FeaturePlot(All_cells, features = "Cyp11a1", reduction = "adt.umap")
