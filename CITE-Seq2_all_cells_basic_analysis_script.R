@@ -741,3 +741,61 @@ pie_E1020K_BCL6_rna <- ggplot(percentage4_rna, aes(x=Genotype, y=mean, fill=RNA_
 pie_E1020K_BCL6_rna
 ggsave("pie_E1020K_BCL6_rna.pdf", width = 30, height = 20, units = "cm")
 
+##Visualise percentage of cells per Genotype in one cluster##
+bxp_clus_1 <- ggplot(percentage, aes(fill=Genotype, y=percent, x=seurat_clusters)) + 
+  geom_bar(position="fill", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
+  xlab("Clusters") + ylab("% of Total cells") + guides(fill=guide_legend(title="Genotype")) +
+  theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
+  theme(plot.title = element_text(size = 35, face = "bold")) +
+  theme(legend.text = element_text(size = 15))
+bxp_clus_1
+ggsave("bxp_clus_1.pdf", width = 30, height = 20, units = "cm")
+
+bxp_clus_2 <- ggplot(percentage, aes(fill=Mouse, y=percent, x=seurat_clusters)) + 
+  geom_bar(position="fill", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
+  xlab("Clusters") + ylab("% of Total cells") + guides(fill=guide_legend(title="Mouse")) +
+  theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
+  theme(plot.title = element_text(size = 35, face = "bold")) +
+  theme(legend.text = element_text(size = 15))
+bxp_clus_2
+ggsave("bxp_clus_2.pdf", width = 30, height = 20, units = "cm")
+
+bxp_clus_1_ab <- ggplot(percentage_ab, aes(fill=Genotype, y=percent, x=ADT_snn_res.1.2)) + 
+  geom_bar(position="fill", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
+  xlab("Clusters") + ylab("% of Total cells") + guides(fill=guide_legend(title="Genotype")) +
+  theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
+  theme(plot.title = element_text(size = 35, face = "bold")) +
+  theme(legend.text = element_text(size = 15))
+bxp_clus_1_ab
+ggsave("bxp_clus_1_ab.pdf", width = 30, height = 20, units = "cm")
+
+bxp_clus_2_ab <- ggplot(percentage_ab, aes(fill=Mouse, y=percent, x=ADT_snn_res.1.2)) + 
+  geom_bar(position="fill", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
+  xlab("Clusters") + ylab("% of Total cells") + guides(fill=guide_legend(title="Mouse")) +
+  theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
+  theme(plot.title = element_text(size = 35, face = "bold")) +
+  theme(legend.text = element_text(size = 15))
+bxp_clus_2_ab
+ggsave("bxp_clus_2_ab.pdf", width = 30, height = 20, units = "cm")
+
+bxp_clus_1_rna <- ggplot(percentage_rna, aes(fill=Genotype, y=percent, x=RNA_snn_res.0.5)) + 
+  geom_bar(position="fill", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
+  xlab("Clusters") + ylab("% of Total cells") + guides(fill=guide_legend(title="Genotype")) +
+  theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
+  theme(plot.title = element_text(size = 35, face = "bold")) +
+  theme(legend.text = element_text(size = 15))
+bxp_clus_1_rna
+ggsave("bxp_clus_1_rna.pdf", width = 30, height = 20, units = "cm")
+
+bxp_clus_2_rna <- ggplot(percentage_rna, aes(fill=Mouse, y=percent, x=RNA_snn_res.0.5)) + 
+  geom_bar(position="fill", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
+  xlab("Clusters") + ylab("% of Total cells") + guides(fill=guide_legend(title="Mouse")) +
+  theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
+  theme(plot.title = element_text(size = 35, face = "bold")) +
+  theme(legend.text = element_text(size = 15))
+bxp_clus_2_rna
+ggsave("bxp_clus_2_rma.pdf", width = 30, height = 20, units = "cm")
+
+
+
+
