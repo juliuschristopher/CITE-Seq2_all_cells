@@ -76,14 +76,6 @@ All_cells <- LoadH5Seurat("CITE-Seq2_all_cells.h5seurat")
 All_cells$seurat_clusters <- All_cells$ADT_snn_res.1.2
 Idents(All_cells) <- All_cells$seurat_clusters
 
-
-All_cells_p1
-ggsave("All_cells_p1.pdf", width = 30, height = 20, units = "cm")
-All_cells_p2
-ggsave("All_cells_p2.pdf", width = 30, height = 20, units = "cm")
-All_cells_p3
-ggsave("All_cells_p3.pdf", width = 30, height = 20, units = "cm")
-
 ####Cluster Identification####
 ##All ADT markers##
 DefaultAssay(All_cells)<-"ADT"
@@ -136,7 +128,7 @@ Allcells_TFIDF_c0_genes <- WhichCells(object = All_cells, ident = "0")
 Allcells_TFIDF_c0 <- tfidf(GetAssayData(All_cells), Allcells_TFIDF_c0_genes, colnames(All_cells))
 
 
-#Cluster 1 - FO B cells
+#Cluster 1 - Activated FO B cells - Mef2, CD83
 All_cells_ADT_c1 <- FindMarkers(All_cells, ident.1 = 1, assay = "ADT")
 All_cells_ADT_c1 <- All_cells_ADT_c1 %>%
   filter(p_val_adj <= 0.05) %>%
@@ -187,6 +179,17 @@ All_cells_RNA_c13 <- All_cells_RNA_c13 %>%
   filter(p_val_adj <= 0.05) %>%
   arrange(desc(avg_log2FC))
 
+#Cluster 8 - 
+All_cells_ADT_c8 <- FindMarkers(All_cells, ident.1 = 8, assay = "ADT")
+All_cells_ADT_c8 <- All_cells_ADT_c8 %>%
+  filter(p_val_adj <= 0.05) %>%
+  arrange(desc(avg_log2FC))
+
+All_cells_RNA_c8 <- FindMarkers(All_cells, ident.1 = 8, assay = "RNA")
+All_cells_RNA_c8 <- All_cells_RNA_c8 %>%
+  filter(p_val_adj <= 0.05) %>%
+  arrange(desc(avg_log2FC))
+
 ##Comparison of CLusters##
 #C1 vs C0
 c1_vs_c0_abs <- FindMarkers(ALl_cells, ident.1 = 1, ident.2 = 0, assay = "ADT")
@@ -202,4 +205,4 @@ c0_vs_c1_rna <- c0_vs_c1_rna %>%
   arrange(desc(avg_log2FC))
 
 DefaultAssay(All_cells)<-"RNA"
-FeaturePlot(All_cells, features = "Cyp11a1", reduction = "adt.umap")
+FeaturePlot(All_cells, features = "Cd83", reduction = "adt.umap")
