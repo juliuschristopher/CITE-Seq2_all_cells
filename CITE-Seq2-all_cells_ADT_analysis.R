@@ -76,6 +76,10 @@ All_cells <- LoadH5Seurat("CITE-Seq2_all_cells.h5seurat")
 All_cells$seurat_clusters <- All_cells$ADT_snn_res.1.2
 Idents(All_cells) <- All_cells$seurat_clusters
 
+All_cells_p3 <- DimPlot(All_cells, label = TRUE, reduction = "wnn.umap", pt.size = 1.3, label.size = 6, label.box = TRUE, cols = col_con2) +  ggtitle("Seurat Clusters") + theme_bw() + NoLegend()
+All_cells_p3 <- All_cells_p3 + theme(plot.title = element_text(color="black", size=25, face = "bold")) + xlab("UMAP1") + ylab("UMAP2")
+
+
 ####Cluster Identification####
 ##All ADT markers##
 DefaultAssay(All_cells)<-"ADT"
@@ -179,7 +183,7 @@ All_cells_RNA_c13 <- All_cells_RNA_c13 %>%
   filter(p_val_adj <= 0.05) %>%
   arrange(desc(avg_log2FC))
 
-#Cluster 8 - 
+#Cluster 8 - Antigen presenting cells
 All_cells_ADT_c8 <- FindMarkers(All_cells, ident.1 = 8, assay = "ADT")
 All_cells_ADT_c8 <- All_cells_ADT_c8 %>%
   filter(p_val_adj <= 0.05) %>%
