@@ -318,7 +318,7 @@ cell_percent_heatmap1 <- pheatmap::pheatmap(t(cell.percent1), cluster_rows = T, 
 ##Cluster differences as bar chart##
 #Boxplot#
 meta.data <- All_cells@meta.data
-counts <- meta.data %>% group_by(Genotype, Mouse, seurat_clusters) %>% summarise(count = n())
+counts <- meta.data %>% group_by(Sex, Genotype, Mouse, seurat_clusters) %>% summarise(count = n())
 percentage <- counts %>% group_by(Genotype, Mouse) %>% mutate(percent = count/sum(count)*100)
 
 bxp <- ggboxplot(percentage, x = "seurat_clusters", y = "percent",
@@ -453,6 +453,8 @@ cell.percent_ab <- cell.percent_ab*100
 cell_percent_heatmap_ab <- pheatmap::pheatmap(t(cell.percent_ab), cluster_rows = T, cluster_cols = T,show_rownames = T, show_colnames = T,
                                            cellwidth = 20,cellheight = 20, angle_col = 45, display_numbers = T)
 
+cell.percent_ab <- tibble::rownames_to_column(cell.percent_ab, "Cluster")
+
 ##Percentage per Genotype
 cell.numbers1_ab <- table(All_cells@meta.data$ADT_snn_res.1.2, All_cells@meta.data$Genotype)
 cell.numbers1_ab <- as.data.frame.matrix(cell.numbers1_ab)
@@ -470,7 +472,7 @@ cell_percent_heatmap1_ab <- pheatmap::pheatmap(t(cell.percent1_ab), cluster_rows
 ##Cluster differences as bar chart##
 #Boxplot#
 meta.data <- All_cells@meta.data
-counts_ab <- meta.data %>% group_by(Genotype, Mouse, ADT_snn_res.1.2) %>% summarise(count = n())
+counts_ab <- meta.data %>% group_by(Sex, Genotype, Mouse, ADT_snn_res.1.2) %>% summarise(count = n())
 percentage_ab <- counts_ab %>% group_by(Genotype, Mouse) %>% mutate(percent = count/sum(count)*100)
 
 bxp_ab <- ggboxplot(percentage_ab, x = "ADT_snn_res.1.2", y = "percent",
@@ -617,11 +619,12 @@ cell.percent1_rna <- cell.percent1_rna*100
 cell_percent_heatmap1_rna <- pheatmap::pheatmap(t(cell.percent1_rna), cluster_rows = T, cluster_cols = T,show_rownames = T, show_colnames = T,
                                                cellwidth = 20,cellheight = 20, angle_col = 45, display_numbers = T)
 
+cell.percent_rna <- tibble::rownames_to_column(cell.percent_rna, "Cluster")
 
 ##Cluster differences as bar chart##
 #Boxplot#
 meta.data <- All_cells@meta.data
-counts_rna <- meta.data %>% group_by(Genotype, Mouse, RNA_snn_res.0.5) %>% summarise(count = n())
+counts_rna <- meta.data %>% group_by(Sex, Genotype, Mouse, RNA_snn_res.0.5) %>% summarise(count = n())
 percentage_rna <- counts_rna %>% group_by(Genotype, Mouse) %>% mutate(percent = count/sum(count)*100)
 
 bxp_rna <- ggboxplot(percentage_rna, x = "RNA_snn_res.0.5", y = "percent",
@@ -796,6 +799,117 @@ bxp_clus_2_rna <- ggplot(percentage_rna, aes(fill=Mouse, y=percent, x=RNA_snn_re
 bxp_clus_2_rna
 ggsave("bxp_clus_2_rma.pdf", width = 30, height = 20, units = "cm")
 
+
+##Visualise percentage of cells by sex in one cluster## - Careful, generally more male mice!
+meta.data <- All_cells@meta.data
+counts_2 <- meta.data %>% group_by(Sex, Genotype, Mouse, seurat_clusters) %>% summarise(count = n())
+percentage_2 <- counts_2 %>% group_by(Genotype, Mouse) %>% mutate(percent = count/sum(count)*100)
+
+bxp_clus_sex_1 <- ggplot(percentage, aes(fill=Sex, y=percent, x=seurat_clusters)) + 
+  geom_bar(position="fill", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
+  xlab("Clusters") + ylab("% of Total cells") + guides(fill=guide_legend(title="Sex")) +
+  theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
+  theme(plot.title = element_text(size = 35, face = "bold")) +
+  theme(legend.text = element_text(size = 15))
+bxp_clus_sex_1
+ggsave("bxp_clus_sex_1.pdf", width = 30, height = 20, units = "cm")
+
+bxp_clus_sex_2 <- ggplot(percentage_ab, aes(fill=Sex, y=percent, x=ADT_snn_res.1.2)) + 
+  geom_bar(position="fill", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
+  xlab("Clusters") + ylab("% of Total cells") + guides(fill=guide_legend(title="Sex")) +
+  theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
+  theme(plot.title = element_text(size = 35, face = "bold")) +
+  theme(legend.text = element_text(size = 15))
+bxp_clus_sex_2
+ggsave("bxp_clus_sex_2.pdf", width = 30, height = 20, units = "cm")
+
+bxp_clus_sex_3 <- ggplot(percentage_rna, aes(fill=Sex, y=percent, x=RNA_snn_res.0.5)) + 
+  geom_bar(position="fill", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
+  xlab("Clusters") + ylab("% of Total cells") + guides(fill=guide_legend(title="Sex")) +
+  theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
+  theme(plot.title = element_text(size = 35, face = "bold")) +
+  theme(legend.text = element_text(size = 15))
+bxp_clus_sex_3
+ggsave("bxp_clus_sex_3.pdf", width = 30, height = 20, units = "cm")
+
+##Biggest differences between clusters between genotypes##
+#WNN
+cell.percent.overall <- cell.percent %>%
+  mutate(WT = (WT_1 + WT_2)/2, BCL6 = (BCL6_1 + BCL6_2)/2, E1020K = E1020K_1, E1020K_BCL6 = (E1020K_BCL6_1 + E1020K_BCL6_2)/2) %>%
+  mutate(WTvsBCL6 = WT/BCL6, WTvsE1020K = WT/E1020K, WTvsE1020K_BCL6 = WT/E1020K_BCL6,
+         BCL6vsE1020K = BCL6/E1020K, BCL6vsE1020K_BCL6 = BCL6/E1020K_BCL6,
+         E1020KvsE1020K_BCL6 = E1020K/E1020K_BCL6)
+
+colnames(cell.percent.overall)
+comparison_plt <- cell.percent.overall[, c(1,13:18)] %>%
+  gather(key = "Comparison", value = "change", c(WTvsBCL6, WTvsE1020K, WTvsE1020K_BCL6,
+                                                   BCL6vsE1020K, BCL6vsE1020K_BCL6,
+                                                   E1020KvsE1020K_BCL6)) %>%
+  mutate(log2fold_change = log2(change))
+
+comparison_plt_1 <- ggplot(comparison_plt, aes(fill=Comparison, log2fold_change, x=Cluster)) + 
+  geom_bar(position="dodge", stat="identity") +
+  theme_bw() + scale_fill_manual(values = col_con2) +
+  ggtitle("Abundance changes between Genotypes by cluster") +
+  theme(legend.title = element_text(face = "bold")) +
+  theme(plot.title = element_text(size = 35, face = "bold")) +
+  theme(legend.text = element_text(size = 15))
+comparison_plt_1
+ggsave("comparison_plt_1.pdf", width = 30, height = 20, units = "cm")
+
+Top6_max <- head(comparison_plt %>%
+  arrange(desc(log2fold_change)))
+
+Top6_min <- head(comparison_plt %>%
+                   arrange(log2fold_change))
+
+#ADT
+cell.percent.overall_ab <- cell.percent_ab %>%
+  mutate(WT = (WT_1 + WT_2)/2, BCL6 = (BCL6_1 + BCL6_2)/2, E1020K = E1020K_1, E1020K_BCL6 = (E1020K_BCL6_1 + E1020K_BCL6_2)/2) %>%
+  mutate(WTvsBCL6 = WT/BCL6, WTvsE1020K = WT/E1020K, WTvsE1020K_BCL6 = WT/E1020K_BCL6,
+         BCL6vsE1020K = BCL6/E1020K, BCL6vsE1020K_BCL6 = BCL6/E1020K_BCL6,
+         E1020KvsE1020K_BCL6 = E1020K/E1020K_BCL6)
+
+colnames(cell.percent.overall_ab)
+comparison_plt_ab <- cell.percent.overall_ab[, c(1,13:18)] %>%
+  gather(key = "Comparison", value = "change", c(WTvsBCL6, WTvsE1020K, WTvsE1020K_BCL6,
+                                                 BCL6vsE1020K, BCL6vsE1020K_BCL6,
+                                                 E1020KvsE1020K_BCL6)) %>%
+  mutate(log2fold_change = log2(change))
+
+comparison_plt_2 <- ggplot(comparison_plt_ab, aes(fill=Comparison, log2fold_change, x=Cluster)) + 
+  geom_bar(position="dodge", stat="identity") +
+  theme_bw() + scale_fill_manual(values = col_con2) +
+  ggtitle("Abundance changes between Genotypes by cluster") +
+  theme(legend.title = element_text(face = "bold")) +
+  theme(plot.title = element_text(size = 35, face = "bold")) +
+  theme(legend.text = element_text(size = 15))
+comparison_plt_2
+ggsave("comparison_plt_2.pdf", width = 30, height = 20, units = "cm")
+
+#RNA
+cell.percent.overall_rna <- cell.percent_rna %>%
+  mutate(WT = (WT_1 + WT_2)/2, BCL6 = (BCL6_1 + BCL6_2)/2, E1020K = E1020K_1, E1020K_BCL6 = (E1020K_BCL6_1 + E1020K_BCL6_2)/2) %>%
+  mutate(WTvsBCL6 = WT/BCL6, WTvsE1020K = WT/E1020K, WTvsE1020K_BCL6 = WT/E1020K_BCL6,
+         BCL6vsE1020K = BCL6/E1020K, BCL6vsE1020K_BCL6 = BCL6/E1020K_BCL6,
+         E1020KvsE1020K_BCL6 = E1020K/E1020K_BCL6)
+
+colnames(cell.percent.overall_rna)
+comparison_plt_rna <- cell.percent.overall_rna[, c(1,13:18)] %>%
+  gather(key = "Comparison", value = "change", c(WTvsBCL6, WTvsE1020K, WTvsE1020K_BCL6,
+                                                 BCL6vsE1020K, BCL6vsE1020K_BCL6,
+                                                 E1020KvsE1020K_BCL6)) %>%
+  mutate(log2fold_change = log2(change))
+
+comparison_plt_3 <- ggplot(comparison_plt_rna, aes(fill=Comparison, log2fold_change, x=Cluster)) + 
+  geom_bar(position="dodge", stat="identity") +
+  theme_bw() + scale_fill_manual(values = col_con2) +
+  ggtitle("Abundance changes between Genotypes by cluster") +
+  theme(legend.title = element_text(face = "bold")) +
+  theme(plot.title = element_text(size = 35, face = "bold")) +
+  theme(legend.text = element_text(size = 15))
+comparison_plt_3
+ggsave("comparison_plt_3.pdf", width = 30, height = 20, units = "cm")
 
 
 
