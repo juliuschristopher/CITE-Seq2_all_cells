@@ -76,8 +76,25 @@ All_cells <- LoadH5Seurat("CITE-Seq2_all_cells.h5seurat")
 All_cells$seurat_clusters <- All_cells$wsnn_res.0.7
 Idents(All_cells) <- All_cells$seurat_clusters
 
-All_cells_p3 <- DimPlot(All_cells, label = TRUE, reduction = "wnn.umap", pt.size = 1.3, label.size = 6, label.box = TRUE, cols = col_con2) +  ggtitle("Seurat Clusters") + theme_bw() + NoLegend()
-All_cells_p3 <- All_cells_p3 + theme(plot.title = element_text(color="black", size=25, face = "bold")) + xlab("UMAP1") + ylab("UMAP2")
+#Or load annotated file
+All_cells <- LoadH5Seurat("CITE-Seq2_all_cells_annot.h5seurat")
+Idents(All_cells) <- All_cells$seurat_clusters
+
+
+All_cells_p1 <- DimPlot(All_cells, label = TRUE, repel = TRUE, reduction = "rna.umap", pt.size = 1.3, label.size = 3, label.box = TRUE, cols = col_con2) +  ggtitle("Seurat Clusters") + theme_bw() + NoLegend()
+All_cells_p1 <- All_cells_p1 + theme(plot.title = element_text(color="black", size=20, face = "bold")) + xlab("UMAP1") + ylab("UMAP2")
+All_cells_p1
+ggsave("All_cells_p1.pdf", width = 30, height = 20, units = "cm")
+
+All_cells_p2 <- DimPlot(All_cells, label = TRUE, repel = TRUE, reduction = "adt.umap", pt.size = 1.3, label.size = 3, label.box = TRUE, cols = col_con2) +  ggtitle("Seurat Clusters") + theme_bw() + NoLegend()
+All_cells_p2 <- All_cells_p2 + theme(plot.title = element_text(color="black", size=20, face = "bold")) + xlab("UMAP1") + ylab("UMAP2")
+All_cells_p2
+ggsave("All_cells_p2.pdf", width = 30, height = 20, units = "cm")
+
+All_cells_p3 <- DimPlot(All_cells, label = TRUE, repel = TRUE, reduction = "wnn.umap", pt.size = 1.3, label.size = 3, label.box = TRUE, cols = col_con2) +  ggtitle("Seurat Clusters") + theme_bw() + NoLegend()
+All_cells_p3 <- All_cells_p3 + theme(plot.title = element_text(color="black", size=20, face = "bold")) + xlab("UMAP1") + ylab("UMAP2")
+All_cells_p3
+ggsave("All_cells_p3.pdf", width = 30, height = 20, units = "cm")
 
 ####Analysis by metadata variables####
 ##Cell cycle##
@@ -178,19 +195,19 @@ Sample.WT.plot_sex_3 <- DimPlot(Sample.WT, label = FALSE ,reduction = "rna.umap"
 Sample.WT.plot_sex_3
 ggsave("Sample.WT.plot_sex_3.pdf", width = 30, height = 20, units = "cm")
 
-Sample.WT.plot_clus_1 <- DimPlot(Sample.WT, label = FALSE ,reduction = "wnn.umap", group.by = "seurat_clusters", pt.size = 1.2, label.size = 6, order = c("Female", "Male")) +
+Sample.WT.plot_clus_1 <- DimPlot(Sample.WT, label = FALSE ,reduction = "wnn.umap", group.by = "seurat_clusters", pt.size = 1.2, label.size = 3, cols = col_con2) +
   theme_bw() +
   ggtitle("WT coloured by clusters")
 Sample.WT.plot_clus_1
 ggsave("Sample.WT.plot_clus_1.pdf", width = 30, height = 20, units = "cm")
 
-Sample.WT.plot_clus_2 <- DimPlot(Sample.WT, label = FALSE ,reduction = "adt.umap", group.by = "seurat_clusters", pt.size = 1.2, label.size = 6, order = c("Female", "Male")) +
+Sample.WT.plot_clus_2 <- DimPlot(Sample.WT, label = FALSE ,reduction = "adt.umap", group.by = "seurat_clusters", pt.size = 1.2, label.size = 6, cols = col_con2) +
   theme_bw() +
   ggtitle("WT coloured by clusters")
 Sample.WT.plot_clus_2
 ggsave("Sample.WT.plot_clus_2.pdf", width = 30, height = 20, units = "cm")
 
-Sample.WT.plot_clus_3 <- DimPlot(Sample.WT, label = FALSE ,reduction = "rna.umap", group.by = "seurat_clusters", pt.size = 1.2, label.size = 6, order = c("Female", "Male")) +
+Sample.WT.plot_clus_3 <- DimPlot(Sample.WT, label = FALSE ,reduction = "rna.umap", group.by = "seurat_clusters", pt.size = 1.2, label.size = 6, cols = col_con2) +
   theme_bw() +
   ggtitle("WT coloured by clusters")
 Sample.WT.plot_clus_3
@@ -217,19 +234,19 @@ Sample.BCL6.plot_sex_3 <- DimPlot(Sample.BCL6, label = FALSE ,reduction = "rna.u
 Sample.BCL6.plot_sex_3
 ggsave("Sample.BCL6.plot_sex_3.pdf", width = 30, height = 20, units = "cm")
 
-Sample.BCL6.plot_clus_1 <- DimPlot(Sample.BCL6, label = FALSE ,reduction = "wnn.umap", group.by = "seurat_clusters", pt.size = 1.2, label.size = 6, order = c("Female", "Male")) +
+Sample.BCL6.plot_clus_1 <- DimPlot(Sample.BCL6, label = FALSE ,reduction = "wnn.umap", group.by = "seurat_clusters", pt.size = 1.2, label.size = 6, cols = col_con2) +
   theme_bw() +
   ggtitle("BCL6 coloured by clusters")
 Sample.BCL6.plot_clus_1
 ggsave("Sample.BCL6.plot_clus_1.pdf", width = 30, height = 20, units = "cm")
 
-Sample.BCL6.plot_clus_2 <- DimPlot(Sample.BCL6, label = FALSE ,reduction = "adt.umap", group.by = "seurat_clusters", pt.size = 1.2, label.size = 6, order = c("Female", "Male")) +
+Sample.BCL6.plot_clus_2 <- DimPlot(Sample.BCL6, label = FALSE ,reduction = "adt.umap", group.by = "seurat_clusters", pt.size = 1.2, label.size = 6, cols = col_con2) +
   theme_bw() +
   ggtitle("BCL6 coloured by clusters")
 Sample.BCL6.plot_clus_2
 ggsave("Sample.BCL6.plot_clus_2.pdf", width = 30, height = 20, units = "cm")
 
-Sample.BCL6.plot_clus_3 <- DimPlot(Sample.BCL6, label = FALSE ,reduction = "rna.umap", group.by = "seurat_clusters", pt.size = 1.2, label.size = 6, order = c("Female", "Male")) +
+Sample.BCL6.plot_clus_3 <- DimPlot(Sample.BCL6, label = FALSE ,reduction = "rna.umap", group.by = "seurat_clusters", pt.size = 1.2, label.size = 6, cols = col_con2) +
   theme_bw() +
   ggtitle("BCL6 coloured by clusters")
 Sample.BCL6.plot_clus_3
@@ -238,19 +255,19 @@ ggsave("Sample.BCL6.plot_clus_3.pdf", width = 30, height = 20, units = "cm")
 
 #E1020K
 Sample.E1020K <- subset(All_cells, subset = Genotype == "E1020K")
-Sample.E1020K.plot_clus_1 <- DimPlot(Sample.E1020K, label = FALSE ,reduction = "wnn.umap", group.by = "seurat_clusters", pt.size = 1.2, label.size = 6, order = c("Female", "Male")) +
+Sample.E1020K.plot_clus_1 <- DimPlot(Sample.E1020K, label = FALSE ,reduction = "wnn.umap", group.by = "seurat_clusters", pt.size = 1.2, label.size = 6, cols = col_con2) +
   theme_bw() +
   ggtitle("E1020K coloured by clusters")
 Sample.E1020K.plot_clus_1
 ggsave("Sample.E1020K.plot_clus_1.pdf", width = 30, height = 20, units = "cm")
 
-Sample.E1020K.plot_clus_2 <- DimPlot(Sample.E1020K, label = FALSE ,reduction = "adt.umap", group.by = "seurat_clusters", pt.size = 1.2, label.size = 6, order = c("Female", "Male")) +
+Sample.E1020K.plot_clus_2 <- DimPlot(Sample.E1020K, label = FALSE ,reduction = "adt.umap", group.by = "seurat_clusters", pt.size = 1.2, label.size = 6, cols = col_con2) +
   theme_bw() +
   ggtitle("E1020K coloured by clusters")
 Sample.E1020K.plot_clus_2
 ggsave("Sample.E1020K.plot_clus_2.pdf", width = 30, height = 20, units = "cm")
 
-Sample.E1020K.plot_clus_3 <- DimPlot(Sample.E1020K, label = FALSE ,reduction = "rna.umap", group.by = "seurat_clusters", pt.size = 1.2, label.size = 6, order = c("Female", "Male")) +
+Sample.E1020K.plot_clus_3 <- DimPlot(Sample.E1020K, label = FALSE ,reduction = "rna.umap", group.by = "seurat_clusters", pt.size = 1.2, label.size = 6, cols = col_con2) +
   theme_bw() +
   ggtitle("E1020K coloured by clusters")
 Sample.E1020K.plot_clus_3
@@ -265,19 +282,19 @@ Sample.E1020K_BCL6.plot_mouse <- DimPlot(Sample.E1020K_BCL6, label = FALSE ,redu
 Sample.E1020K_BCL6.plot_mouse
 ggsave("Sample.E1020K_BCL6.plot_mouse.pdf", width = 30, height = 20, units = "cm")
 
-Sample.E1020K_BCL6.plot_clus_1 <- DimPlot(Sample.E1020K_BCL6, label = FALSE ,reduction = "wnn.umap", group.by = "seurat_clusters", pt.size = 1.2, label.size = 6, order = c("E1020K_BCL6_1", "E1020K_BCL6_2")) +
+Sample.E1020K_BCL6.plot_clus_1 <- DimPlot(Sample.E1020K_BCL6, label = FALSE ,reduction = "wnn.umap", group.by = "seurat_clusters", pt.size = 1.2, label.size = 6, cols = col_con2) +
   theme_bw() +
   ggtitle("E1020K_BCL6 coloured by cluster")
 Sample.E1020K_BCL6.plot_clus_1
 ggsave("Sample.E1020K_BCL6.plot_clus_1.pdf", width = 30, height = 20, units = "cm")
 
-Sample.E1020K_BCL6.plot_clus_2 <- DimPlot(Sample.E1020K_BCL6, label = FALSE ,reduction = "adt.umap", group.by = "seurat_clusters", pt.size = 1.2, label.size = 6, order = c("E1020K_BCL6_1", "E1020K_BCL6_2")) +
+Sample.E1020K_BCL6.plot_clus_2 <- DimPlot(Sample.E1020K_BCL6, label = FALSE ,reduction = "adt.umap", group.by = "seurat_clusters", pt.size = 1.2, label.size = 6, cols = col_con2) +
   theme_bw() +
   ggtitle("E1020K_BCL6 coloured by cluster")
 Sample.E1020K_BCL6.plot_clus_2
 ggsave("Sample.E1020K_BCL6.plot_clus_2.pdf", width = 30, height = 20, units = "cm")
 
-Sample.E1020K_BCL6.plot_clus_3 <- DimPlot(Sample.E1020K_BCL6, label = FALSE ,reduction = "rna.umap", group.by = "seurat_clusters", pt.size = 1.2, label.size = 6, order = c("E1020K_BCL6_1", "E1020K_BCL6_2")) +
+Sample.E1020K_BCL6.plot_clus_3 <- DimPlot(Sample.E1020K_BCL6, label = FALSE ,reduction = "rna.umap", group.by = "seurat_clusters", pt.size = 1.2, label.size = 6, cols = col_con2) +
   theme_bw() +
   ggtitle("E1020K_BCL6 coloured by cluster")
 Sample.E1020K_BCL6.plot_clus_3
@@ -322,10 +339,10 @@ counts <- meta.data %>% group_by(Sex, Genotype, Mouse, seurat_clusters) %>% summ
 percentage <- counts %>% group_by(Genotype, Mouse) %>% mutate(percent = count/sum(count)*100)
 
 bxp <- ggboxplot(percentage, x = "seurat_clusters", y = "percent",
-                 color = "Genotype", palette = c("WT" = "black","BCL6" = "darkgoldenrod1","E1020K" = "blue", "E1020K_BCL6" = "red"), add = "jitter", shape = "Genotype", outlier.shape = NA
-) + labs(x = "Seurat Clusters", y = "% of total cells", color = "Genotype", shape = "Genotype") +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1), 
-        axis.title.x=element_blank()) + theme_bw()
+                 color = "Genotype", palette = c("WT" = "black","BCL6" = "darkgoldenrod1","E1020K" = "blue", "E1020K_BCL6" = "red"), add = "jitter", shape = "Genotype", outlier.shape = NA) +
+  labs(x = "Seurat Clusters", y = "% of Total cells", color = "Genotype", shape = "Genotype") +
+  theme_bw() + theme(axis.text.x = element_text(angle = 45, vjust = 1 , hjust = 1)) +
+  theme(plot.margin = unit(c(1,1,1,1), "cm"))
 bxp
 ggsave("bxp.pdf", width = 30, height = 20, units = "cm")
 
@@ -335,18 +352,17 @@ bpr_1 <- ggplot(percentage, aes(fill=seurat_clusters, y=percent, x=Mouse)) +
   geom_bar(position="fill", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
   xlab("Genotype") + ylab("% of Total cells") + guides(fill=guide_legend(title="Clusters")) +
   theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
+  theme(plot.title = element_text(size = 20, face = "bold")) +
+  theme(legend.text = element_text(size = 8))
 bpr_1
 ggsave("BOX_fill_plot.pdf", width = 30, height = 20, units = "cm")
-
 
 bpr_2 <- ggplot(percentage, aes(fill=seurat_clusters, y=percent, x=Genotype)) + 
   geom_bar(position="fill", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
   xlab("Genotype") + ylab("% of Total cells") + guides(fill=guide_legend(title="Clusters")) +
   theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
+  theme(plot.title = element_text(size = 20, face = "bold")) +
+  theme(legend.text = element_text(size = 8))
 bpr_2
 ggsave("BOX_fill_plot2.pdf", width = 30, height = 20, units = "cm")
 
@@ -354,8 +370,8 @@ bpr_3 <- ggplot(percentage, aes(fill=seurat_clusters, y=percent, x=Mouse)) +
   geom_bar(position="dodge", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
   xlab("Genotype") + ylab("% of Total cells") + guides(fill=guide_legend(title="Clusters")) +
   theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
+  theme(plot.title = element_text(size = 20, face = "bold")) +
+  theme(legend.text = element_text(size = 8))
 bpr_3
 ggsave("BOX_fill_plot3.pdf", width = 30, height = 20, units = "cm")
 
@@ -363,8 +379,8 @@ bpr_4 <- ggplot(percentage, aes(fill=seurat_clusters, y=percent, x=Genotype)) +
   geom_bar(position="dodge", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
   xlab("Genotype") + ylab("% of Total cells") + guides(fill=guide_legend(title="Clusters")) +
   theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
+  theme(plot.title = element_text(size = 20, face = "bold")) +
+  theme(legend.text = element_text(size = 8))
 bpr_4
 ggsave("BOX_fill_plot4.pdf", width = 30, height = 20, units = "cm")
 
@@ -396,9 +412,9 @@ pie_WT <- ggplot(percentage1, aes(x=Genotype, y=mean, fill=seurat_clusters)) +
   theme_classic() + scale_fill_manual(values = col_con2) +
   guides(fill=guide_legend(title="Clusters")) +
   xlab("") + ylab("") +
-  theme(legend.title = element_text(size = 25, face = "bold")) + ggtitle("Cellular Proportions - WT") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
+  theme(legend.title = element_text(size = 15, face = "bold")) + ggtitle("Cellular Proportions - WT") +
+  theme(plot.title = element_text(size = 20, face = "bold")) +
+  theme(legend.text = element_text(size = 8))
 pie_WT
 ggsave("pie_WT.pdf", width = 30, height = 20, units = "cm")
 
@@ -408,9 +424,9 @@ pie_BCL6 <- ggplot(percentage2, aes(x=Genotype, y=mean, fill=seurat_clusters)) +
   theme_classic() + scale_fill_manual(values = col_con2) +
   guides(fill=guide_legend(title="Clusters")) +
   xlab("") + ylab("") +
-  theme(legend.title = element_text(size = 25, face = "bold")) + ggtitle("Cellular Proportions - E1020K") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
+  theme(legend.title = element_text(size = 15, face = "bold")) + ggtitle("Cellular Proportions - E1020K") +
+  theme(plot.title = element_text(size = 20, face = "bold")) +
+  theme(legend.text = element_text(size = 8))
 pie_BCL6
 ggsave("pie_BCL6.pdf", width = 30, height = 20, units = "cm")
 
@@ -420,9 +436,9 @@ pie_E1020K <- ggplot(percentage3, aes(x=Genotype, y=mean, fill=seurat_clusters))
   theme_classic() + scale_fill_manual(values = col_con2) +
   guides(fill=guide_legend(title="Clusters")) +
   xlab("") + ylab("") +
-  theme(legend.title = element_text(size = 25, face = "bold")) + ggtitle("Cellular Proportions - WT") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
+  theme(legend.title = element_text(size = 15, face = "bold")) + ggtitle("Cellular Proportions - WT") +
+  theme(plot.title = element_text(size = 20, face = "bold")) +
+  theme(legend.text = element_text(size = 8))
 pie_E1020K
 ggsave("pie_E1020K.pdf", width = 30, height = 20, units = "cm")
 
@@ -432,372 +448,35 @@ pie_E1020K_BCL6 <- ggplot(percentage4, aes(x=Genotype, y=mean, fill=seurat_clust
   theme_classic() + scale_fill_manual(values = col_con2) +
   guides(fill=guide_legend(title="Clusters")) +
   xlab("") + ylab("") +
-  theme(legend.title = element_text(size = 25, face = "bold")) + ggtitle("Cellular Proportions - WT") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
+  theme(legend.title = element_text(size = 15, face = "bold")) + ggtitle("Cellular Proportions - WT") +
+  theme(plot.title = element_text(size = 20, face = "bold")) +
+  theme(legend.text = element_text(size = 8))
 pie_E1020K_BCL6
 ggsave("pie_E1020K_BCL6.pdf", width = 30, height = 20, units = "cm")
 
 
-####Cellular proportions between clusters - ADT####
-##Percentage per mouse
-cell.numbers_ab <- table(All_cells@meta.data$ADT_snn_res.1.2, All_cells@meta.data$Mouse)
-cell.numbers_ab <- as.data.frame.matrix(cell.numbers_ab)
-All_cells_meta_ab <- All_cells@meta.data
-genotype.numbers_ab <- All_cells_meta_ab %>% dplyr::count(Mouse)
-genotype.numbers.vector_ab <- genotype.numbers_ab %>% pull(n)
-str(genotype.numbers.vector_ab)
-cell.percent_ab <- sweep(cell.numbers_ab, 2, genotype.numbers.vector_ab, "/")
-cell.percent_ab <- cell.percent_ab*100
-
-cell_percent_heatmap_ab <- pheatmap::pheatmap(t(cell.percent_ab), cluster_rows = T, cluster_cols = T,show_rownames = T, show_colnames = T,
-                                           cellwidth = 20,cellheight = 20, angle_col = 45, display_numbers = T)
-
-cell.percent_ab <- tibble::rownames_to_column(cell.percent_ab, "Cluster")
-
-##Percentage per Genotype
-cell.numbers1_ab <- table(All_cells@meta.data$ADT_snn_res.1.2, All_cells@meta.data$Genotype)
-cell.numbers1_ab <- as.data.frame.matrix(cell.numbers1_ab)
-All_cells_meta1_ab <- All_cells@meta.data
-genotype.numbers1_ab <- All_cells_meta1_ab %>% dplyr::count(Genotype)
-genotype.numbers.vector1_ab <- genotype.numbers1_ab %>% pull(n)
-str(genotype.numbers.vector1_ab)
-cell.percent1_ab <- sweep(cell.numbers1_ab, 2, genotype.numbers.vector1_ab, "/")
-cell.percent1_ab <- cell.percent1_ab*100
-
-cell_percent_heatmap1_ab <- pheatmap::pheatmap(t(cell.percent1_ab), cluster_rows = T, cluster_cols = T,show_rownames = T, show_colnames = T,
-                                            cellwidth = 20,cellheight = 20, angle_col = 45, display_numbers = T)
-
-
-##Cluster differences as bar chart##
-#Boxplot#
-meta.data <- All_cells@meta.data
-counts_ab <- meta.data %>% group_by(Sex, Genotype, Mouse, ADT_snn_res.1.2) %>% summarise(count = n())
-percentage_ab <- counts_ab %>% group_by(Genotype, Mouse) %>% mutate(percent = count/sum(count)*100)
-
-bxp_ab <- ggboxplot(percentage_ab, x = "ADT_snn_res.1.2", y = "percent",
-                 color = "Genotype", palette = c("WT" = "black","BCL6" = "darkgoldenrod1","E1020K" = "blue", "E1020K_BCL6" = "red"), add = "jitter", shape = "Genotype", outlier.shape = NA
-) + labs(x = "Ab Seurat Clusters", y = "% of total cells", color = "Genotype", shape = "Genotype") +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1), 
-        axis.title.x=element_blank()) + theme_bw()
-bxp_ab
-ggsave("bxp_ab.pdf", width = 30, height = 20, units = "cm")
-
-
-#Bar Chart#
-bpr_1_ab <- ggplot(percentage_ab, aes(fill=ADT_snn_res.1.2, y=percent, x=Mouse)) + 
-  geom_bar(position="fill", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
-  xlab("Genotype") + ylab("% of Total cells") + guides(fill=guide_legend(title="Ab Clusters")) +
-  theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
-bpr_1_ab
-ggsave("BOX_fill_plot_ab.pdf", width = 30, height = 20, units = "cm")
-
-
-bpr_2_ab <- ggplot(percentage_ab, aes(fill=ADT_snn_res.1.2, y=percent, x=Genotype)) + 
-  geom_bar(position="fill", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
-  xlab("Genotype") + ylab("% of Total cells") + guides(fill=guide_legend(title="Ab Clusters")) +
-  theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
-bpr_2_ab
-ggsave("BOX_fill_plot2_ab.pdf", width = 30, height = 20, units = "cm")
-
-bpr_3_ab <- ggplot(percentage_ab, aes(fill=ADT_snn_res.1.2, y=percent, x=Mouse)) + 
-  geom_bar(position="dodge", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
-  xlab("Genotype") + ylab("% of Total cells") + guides(fill=guide_legend(title="Ab Clusters")) +
-  theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
-bpr_3_ab
-ggsave("BOX_fill_plot3_ab.pdf", width = 30, height = 20, units = "cm")
-
-bpr_4_ab <- ggplot(percentage_ab, aes(fill=ADT_snn_res.1.2, y=percent, x=Genotype)) + 
-  geom_bar(position="dodge", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
-  xlab("Genotype") + ylab("% of Total cells") + guides(fill=guide_legend(title="Ab Clusters")) +
-  theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
-bpr_4_ab
-ggsave("BOX_fill_plot4_ab.pdf", width = 30, height = 20, units = "cm")
-
-#Pie charts
-percentage1_ab <- percentage_ab %>%
-  filter(Genotype == "WT") %>%
-  group_by(Genotype, ADT_snn_res.1.2) %>%
-  summarise(mean = mean(percent))
-
-percentage2_ab <- percentage_ab %>%
-  filter(Genotype == "BCL6") %>%
-  group_by(Genotype, ADT_snn_res.1.2) %>%
-  summarise(mean = mean(percent))
-
-percentage3_ab <- percentage_ab %>%
-  filter(Genotype == "E1020K") %>%
-  group_by(Genotype, ADT_snn_res.1.2) %>%
-  summarise(mean = mean(percent))
-
-percentage4_ab <- percentage_ab %>%
-  filter(Genotype == "E1020K_BCL6") %>%
-  group_by(Genotype, ADT_snn_res.1.2) %>%
-  summarise(mean = mean(percent))
-
-
-pie_WT_ab <- ggplot(percentage1_ab, aes(x=Genotype, y=mean, fill=ADT_snn_res.1.2)) +
-  geom_bar(stat="identity", width=1) +
-  coord_polar("y", start=0) +
-  theme_classic() + scale_fill_manual(values = col_con2) +
-  guides(fill=guide_legend(title="Ab Clusters")) +
-  xlab("") + ylab("") +
-  theme(legend.title = element_text(size = 25, face = "bold")) + ggtitle("Cellular Proportions - WT") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
-pie_WT_ab
-ggsave("pie_WT_ab.pdf", width = 30, height = 20, units = "cm")
-
-pie_BCL6_ab <- ggplot(percentage2_ab, aes(x=Genotype, y=mean, fill=ADT_snn_res.1.2)) +
-  geom_bar(stat="identity", width=1) +
-  coord_polar("y", start=0) +
-  theme_classic() + scale_fill_manual(values = col_con2) +
-  guides(fill=guide_legend(title="Ab Clusters")) +
-  xlab("") + ylab("") +
-  theme(legend.title = element_text(size = 25, face = "bold")) + ggtitle("Cellular Proportions - E1020K") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
-pie_BCL6_ab
-ggsave("pie_BCL6_ab.pdf", width = 30, height = 20, units = "cm")
-
-pie_E1020K_ab <- ggplot(percentage3_ab, aes(x=Genotype, y=mean, fill=ADT_snn_res.1.2)) +
-  geom_bar(stat="identity", width=1) +
-  coord_polar("y", start=0) +
-  theme_classic() + scale_fill_manual(values = col_con2) +
-  guides(fill=guide_legend(title="Ab Clusters")) +
-  xlab("") + ylab("") +
-  theme(legend.title = element_text(size = 25, face = "bold")) + ggtitle("Cellular Proportions - WT") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
-pie_E1020K_ab
-ggsave("pie_E1020K_ab.pdf", width = 30, height = 20, units = "cm")
-
-pie_E1020K_BCL6_ab <- ggplot(percentage4_ab, aes(x=Genotype, y=mean, fill=ADT_snn_res.1.2)) +
-  geom_bar(stat="identity", width=1) +
-  coord_polar("y", start=0) +
-  theme_classic() + scale_fill_manual(values = col_con2) +
-  guides(fill=guide_legend(title="Ab Clusters")) +
-  xlab("") + ylab("") +
-  theme(legend.title = element_text(size = 25, face = "bold")) + ggtitle("Cellular Proportions - WT") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
-pie_E1020K_BCL6_ab
-ggsave("pie_E1020K_BCL6_ab.pdf", width = 30, height = 20, units = "cm")
-
-####Cellular proportions between clusters - RNA####
-##Percentage per mouse
-cell.numbers_rna <- table(All_cells@meta.data$RNA_snn_res.0.5, All_cells@meta.data$Mouse)
-cell.numbers_rna <- as.data.frame.matrix(cell.numbers_rna)
-All_cells_meta_rna <- All_cells@meta.data
-genotype.numbers_rna <- All_cells_meta_rna %>% dplyr::count(Mouse)
-genotype.numbers.vector_rna <- genotype.numbers_rna %>% pull(n)
-str(genotype.numbers.vector_rna)
-cell.percent_rna <- sweep(cell.numbers_rna, 2, genotype.numbers.vector_rna, "/")
-cell.percent_rna <- cell.percent_rna*100
-
-cell_percent_heatmap_rna <- pheatmap::pheatmap(t(cell.percent_rna), cluster_rows = T, cluster_cols = T,show_rownames = T, show_colnames = T,
-                                              cellwidth = 20,cellheight = 20, angle_col = 45, display_numbers = T)
-
-##Percentage per Genotype
-cell.numbers1_rna <- table(All_cells@meta.data$RNA_snn_res.0.5, All_cells@meta.data$Genotype)
-cell.numbers1_rna <- as.data.frame.matrix(cell.numbers1_rna)
-All_cells_meta1_rna <- All_cells@meta.data
-genotype.numbers1_rna <- All_cells_meta1_rna %>% dplyr::count(Genotype)
-genotype.numbers.vector1_rna <- genotype.numbers1_rna %>% pull(n)
-str(genotype.numbers.vector1_rna)
-cell.percent1_rna <- sweep(cell.numbers1_rna, 2, genotype.numbers.vector1_rna, "/")
-cell.percent1_rna <- cell.percent1_rna*100
-
-cell_percent_heatmap1_rna <- pheatmap::pheatmap(t(cell.percent1_rna), cluster_rows = T, cluster_cols = T,show_rownames = T, show_colnames = T,
-                                               cellwidth = 20,cellheight = 20, angle_col = 45, display_numbers = T)
-
-cell.percent_rna <- tibble::rownames_to_column(cell.percent_rna, "Cluster")
-
-##Cluster differences as bar chart##
-#Boxplot#
-meta.data <- All_cells@meta.data
-counts_rna <- meta.data %>% group_by(Sex, Genotype, Mouse, RNA_snn_res.0.5) %>% summarise(count = n())
-percentage_rna <- counts_rna %>% group_by(Genotype, Mouse) %>% mutate(percent = count/sum(count)*100)
-
-bxp_rna <- ggboxplot(percentage_rna, x = "RNA_snn_res.0.5", y = "percent",
-                    color = "Genotype", palette = c("WT" = "black","BCL6" = "darkgoldenrod1","E1020K" = "blue", "E1020K_BCL6" = "red"), add = "jitter", shape = "Genotype", outlier.shape = NA
-) + labs(x = "RNA Seurat Clusters", y = "% of total cells", color = "Genotype", shape = "Genotype") +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1), 
-        axis.title.x=element_blank()) + theme_bw()
-bxp_rna
-ggsave("bxp_rna.pdf", width = 30, height = 20, units = "cm")
-
-
-#Bar Chart#
-bpr_1_rna <- ggplot(percentage_rna, aes(fill=RNA_snn_res.0.5, y=percent, x=Mouse)) + 
-  geom_bar(position="fill", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
-  xlab("Genotype") + ylab("% of Total cells") + guides(fill=guide_legend(title="RNA Clusters")) +
-  theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
-bpr_1_rna
-ggsave("BOX_fill_plot_rna.pdf", width = 30, height = 20, units = "cm")
-
-
-bpr_2_rna <- ggplot(percentage_rna, aes(fill=RNA_snn_res.0.5, y=percent, x=Genotype)) + 
-  geom_bar(position="fill", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
-  xlab("Genotype") + ylab("% of Total cells") + guides(fill=guide_legend(title="RNA Clusters")) +
-  theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
-bpr_2_rna
-ggsave("BOX_fill_plot2_rna.pdf", width = 30, height = 20, units = "cm")
-
-bpr_3_rna <- ggplot(percentage_rna, aes(fill=RNA_snn_res.0.5, y=percent, x=Mouse)) + 
-  geom_bar(position="dodge", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
-  xlab("Genotype") + ylab("% of Total cells") + guides(fill=guide_legend(title="RNA Clusters")) +
-  theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
-bpr_3_rna
-ggsave("BOX_fill_plot3_rna.pdf", width = 30, height = 20, units = "cm")
-
-bpr_4_rna <- ggplot(percentage_rna, aes(fill=RNA_snn_res.0.5, y=percent, x=Genotype)) + 
-  geom_bar(position="dodge", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
-  xlab("Genotype") + ylab("% of Total cells") + guides(fill=guide_legend(title="RNA Clusters")) +
-  theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
-bpr_4_rna
-ggsave("BOX_fill_plot4_rna.pdf", width = 30, height = 20, units = "cm")
-
-#Pie charts#
-percentage1_rna <- percentage_rna %>%
-  filter(Genotype == "WT") %>%
-  group_by(Genotype, RNA_snn_res.0.5) %>%
-  summarise(mean = mean(percent))
-
-percentage2_rna <- percentage_rna %>%
-  filter(Genotype == "BCL6") %>%
-  group_by(Genotype, RNA_snn_res.0.5) %>%
-  summarise(mean = mean(percent))
-
-percentage3_rna <- percentage_rna %>%
-  filter(Genotype == "E1020K") %>%
-  group_by(Genotype, RNA_snn_res.0.5) %>%
-  summarise(mean = mean(percent))
-
-percentage4_rna <- percentage_rna %>%
-  filter(Genotype == "E1020K_BCL6") %>%
-  group_by(Genotype, RNA_snn_res.0.5) %>%
-  summarise(mean = mean(percent))
-
-
-pie_WT_rna <- ggplot(percentage1_rna, aes(x=Genotype, y=mean, fill=RNA_snn_res.0.5)) +
-  geom_bar(stat="identity", width=1) +
-  coord_polar("y", start=0) +
-  theme_classic() + scale_fill_manual(values = col_con2) +
-  guides(fill=guide_legend(title="RNA Clusters")) +
-  xlab("") + ylab("") +
-  theme(legend.title = element_text(size = 25, face = "bold")) + ggtitle("Cellular Proportions - WT") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
-pie_WT_rna
-ggsave("pie_WT_rna.pdf", width = 30, height = 20, units = "cm")
-
-pie_BCL6_rna <- ggplot(percentage2_rna, aes(x=Genotype, y=mean, fill=RNA_snn_res.0.5)) +
-  geom_bar(stat="identity", width=1) +
-  coord_polar("y", start=0) +
-  theme_classic() + scale_fill_manual(values = col_con2) +
-  guides(fill=guide_legend(title="RNA Clusters")) +
-  xlab("") + ylab("") +
-  theme(legend.title = element_text(size = 25, face = "bold")) + ggtitle("Cellular Proportions - E1020K") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
-pie_BCL6_rna
-ggsave("pie_BCL6_rna.pdf", width = 30, height = 20, units = "cm")
-
-pie_E1020K_rna <- ggplot(percentage3_rna, aes(x=Genotype, y=mean, fill=RNA_snn_res.0.5)) +
-  geom_bar(stat="identity", width=1) +
-  coord_polar("y", start=0) +
-  theme_classic() + scale_fill_manual(values = col_con2) +
-  guides(fill=guide_legend(title="RNA Clusters")) +
-  xlab("") + ylab("") +
-  theme(legend.title = element_text(size = 25, face = "bold")) + ggtitle("Cellular Proportions - WT") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
-pie_E1020K_rna
-ggsave("pie_E1020K_rna.pdf", width = 30, height = 20, units = "cm")
-
-pie_E1020K_BCL6_rna <- ggplot(percentage4_rna, aes(x=Genotype, y=mean, fill=RNA_snn_res.0.5)) +
-  geom_bar(stat="identity", width=1) +
-  coord_polar("y", start=0) +
-  theme_classic() + scale_fill_manual(values = col_con2) +
-  guides(fill=guide_legend(title="RNA Clusters")) +
-  xlab("") + ylab("") +
-  theme(legend.title = element_text(size = 25, face = "bold")) + ggtitle("Cellular Proportions - WT") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
-pie_E1020K_BCL6_rna
-ggsave("pie_E1020K_BCL6_rna.pdf", width = 30, height = 20, units = "cm")
-
 ##Visualise percentage of cells per Genotype in one cluster##
 bxp_clus_1 <- ggplot(percentage, aes(fill=Genotype, y=percent, x=seurat_clusters)) + 
   geom_bar(position="fill", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
-  xlab("Clusters") + ylab("% of Total cells") + guides(fill=guide_legend(title="Genotype")) +
+  xlab("Seurat Clusters") + ylab("% of Total cells") + guides(fill=guide_legend(title="Genotype")) +
   theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
+  theme(plot.title = element_text(size = 20, face = "bold")) +
+  theme(legend.text = element_text(size = 8)) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1 , hjust = 1)) +
+  theme(plot.margin = unit(c(1,1,1,1), "cm"))
 bxp_clus_1
 ggsave("bxp_clus_1.pdf", width = 30, height = 20, units = "cm")
 
 bxp_clus_2 <- ggplot(percentage, aes(fill=Mouse, y=percent, x=seurat_clusters)) + 
   geom_bar(position="fill", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
-  xlab("Clusters") + ylab("% of Total cells") + guides(fill=guide_legend(title="Mouse")) +
+  xlab("Seurat Clusters") + ylab("% of Total cells") + guides(fill=guide_legend(title="Mouse")) +
   theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
+  theme(plot.title = element_text(size = 20, face = "bold")) +
+  theme(legend.text = element_text(size = 8)) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1 , hjust = 1)) +
+  theme(plot.margin = unit(c(1,1,1,1), "cm"))
 bxp_clus_2
 ggsave("bxp_clus_2.pdf", width = 30, height = 20, units = "cm")
-
-bxp_clus_1_ab <- ggplot(percentage_ab, aes(fill=Genotype, y=percent, x=ADT_snn_res.1.2)) + 
-  geom_bar(position="fill", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
-  xlab("Clusters") + ylab("% of Total cells") + guides(fill=guide_legend(title="Genotype")) +
-  theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
-bxp_clus_1_ab
-ggsave("bxp_clus_1_ab.pdf", width = 30, height = 20, units = "cm")
-
-bxp_clus_2_ab <- ggplot(percentage_ab, aes(fill=Mouse, y=percent, x=ADT_snn_res.1.2)) + 
-  geom_bar(position="fill", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
-  xlab("Clusters") + ylab("% of Total cells") + guides(fill=guide_legend(title="Mouse")) +
-  theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
-bxp_clus_2_ab
-ggsave("bxp_clus_2_ab.pdf", width = 30, height = 20, units = "cm")
-
-bxp_clus_1_rna <- ggplot(percentage_rna, aes(fill=Genotype, y=percent, x=RNA_snn_res.0.5)) + 
-  geom_bar(position="fill", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
-  xlab("Clusters") + ylab("% of Total cells") + guides(fill=guide_legend(title="Genotype")) +
-  theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
-bxp_clus_1_rna
-ggsave("bxp_clus_1_rna.pdf", width = 30, height = 20, units = "cm")
-
-bxp_clus_2_rna <- ggplot(percentage_rna, aes(fill=Mouse, y=percent, x=RNA_snn_res.0.5)) + 
-  geom_bar(position="fill", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
-  xlab("Clusters") + ylab("% of Total cells") + guides(fill=guide_legend(title="Mouse")) +
-  theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
-bxp_clus_2_rna
-ggsave("bxp_clus_2_rma.pdf", width = 30, height = 20, units = "cm")
 
 
 ##Visualise percentage of cells by sex in one cluster## - Careful, generally more male mice!
@@ -809,28 +488,12 @@ bxp_clus_sex_1 <- ggplot(percentage, aes(fill=Sex, y=percent, x=seurat_clusters)
   geom_bar(position="fill", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
   xlab("Clusters") + ylab("% of Total cells") + guides(fill=guide_legend(title="Sex")) +
   theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
+  theme(plot.title = element_text(size = 20, face = "bold")) +
+  theme(legend.text = element_text(size = 8)) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1 , hjust = 1)) +
+  theme(plot.margin = unit(c(1,1,1,1), "cm"))
 bxp_clus_sex_1
 ggsave("bxp_clus_sex_1.pdf", width = 30, height = 20, units = "cm")
-
-bxp_clus_sex_2 <- ggplot(percentage_ab, aes(fill=Sex, y=percent, x=ADT_snn_res.1.2)) + 
-  geom_bar(position="fill", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
-  xlab("Clusters") + ylab("% of Total cells") + guides(fill=guide_legend(title="Sex")) +
-  theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
-bxp_clus_sex_2
-ggsave("bxp_clus_sex_2.pdf", width = 30, height = 20, units = "cm")
-
-bxp_clus_sex_3 <- ggplot(percentage_rna, aes(fill=Sex, y=percent, x=RNA_snn_res.0.5)) + 
-  geom_bar(position="fill", stat="identity") + theme_bw() + scale_fill_manual(values = col_con2) +
-  xlab("Clusters") + ylab("% of Total cells") + guides(fill=guide_legend(title="Sex")) +
-  theme(legend.title = element_text(face = "bold")) + ggtitle("Cellular Proportions") +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
-bxp_clus_sex_3
-ggsave("bxp_clus_sex_3.pdf", width = 30, height = 20, units = "cm")
 
 ##Biggest differences between clusters between genotypes##
 #WNN
@@ -853,7 +516,9 @@ comparison_plt_1 <- ggplot(comparison_plt, aes(fill=Comparison, log2fold_change,
   ggtitle("Abundance changes between Genotypes by cluster") +
   theme(legend.title = element_text(face = "bold")) +
   theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
+  theme(legend.text = element_text(size = 15)) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1 , hjust = 1)) +
+  theme(plot.margin = unit(c(3,3,3,3), "cm"))
 comparison_plt_1
 ggsave("comparison_plt_1.pdf", width = 30, height = 20, units = "cm")
 
@@ -862,54 +527,3 @@ Top6_max <- head(comparison_plt %>%
 
 Top6_min <- head(comparison_plt %>%
                    arrange(log2fold_change))
-
-#ADT
-cell.percent.overall_ab <- cell.percent_ab %>%
-  mutate(WT = (WT_1 + WT_2)/2, BCL6 = (BCL6_1 + BCL6_2)/2, E1020K = E1020K_1, E1020K_BCL6 = (E1020K_BCL6_1 + E1020K_BCL6_2)/2) %>%
-  mutate(WTvsBCL6 = WT/BCL6, WTvsE1020K = WT/E1020K, WTvsE1020K_BCL6 = WT/E1020K_BCL6,
-         BCL6vsE1020K = BCL6/E1020K, BCL6vsE1020K_BCL6 = BCL6/E1020K_BCL6,
-         E1020KvsE1020K_BCL6 = E1020K/E1020K_BCL6)
-
-colnames(cell.percent.overall_ab)
-comparison_plt_ab <- cell.percent.overall_ab[, c(1,13:18)] %>%
-  gather(key = "Comparison", value = "change", c(WTvsBCL6, WTvsE1020K, WTvsE1020K_BCL6,
-                                                 BCL6vsE1020K, BCL6vsE1020K_BCL6,
-                                                 E1020KvsE1020K_BCL6)) %>%
-  mutate(log2fold_change = log2(change))
-
-comparison_plt_2 <- ggplot(comparison_plt_ab, aes(fill=Comparison, log2fold_change, x=Cluster)) + 
-  geom_bar(position="dodge", stat="identity") +
-  theme_bw() + scale_fill_manual(values = col_con2) +
-  ggtitle("Abundance changes between Genotypes by cluster") +
-  theme(legend.title = element_text(face = "bold")) +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
-comparison_plt_2
-ggsave("comparison_plt_2.pdf", width = 30, height = 20, units = "cm")
-
-#RNA
-cell.percent.overall_rna <- cell.percent_rna %>%
-  mutate(WT = (WT_1 + WT_2)/2, BCL6 = (BCL6_1 + BCL6_2)/2, E1020K = E1020K_1, E1020K_BCL6 = (E1020K_BCL6_1 + E1020K_BCL6_2)/2) %>%
-  mutate(WTvsBCL6 = WT/BCL6, WTvsE1020K = WT/E1020K, WTvsE1020K_BCL6 = WT/E1020K_BCL6,
-         BCL6vsE1020K = BCL6/E1020K, BCL6vsE1020K_BCL6 = BCL6/E1020K_BCL6,
-         E1020KvsE1020K_BCL6 = E1020K/E1020K_BCL6)
-
-colnames(cell.percent.overall_rna)
-comparison_plt_rna <- cell.percent.overall_rna[, c(1,13:18)] %>%
-  gather(key = "Comparison", value = "change", c(WTvsBCL6, WTvsE1020K, WTvsE1020K_BCL6,
-                                                 BCL6vsE1020K, BCL6vsE1020K_BCL6,
-                                                 E1020KvsE1020K_BCL6)) %>%
-  mutate(log2fold_change = log2(change))
-
-comparison_plt_3 <- ggplot(comparison_plt_rna, aes(fill=Comparison, log2fold_change, x=Cluster)) + 
-  geom_bar(position="dodge", stat="identity") +
-  theme_bw() + scale_fill_manual(values = col_con2) +
-  ggtitle("Abundance changes between Genotypes by cluster") +
-  theme(legend.title = element_text(face = "bold")) +
-  theme(plot.title = element_text(size = 35, face = "bold")) +
-  theme(legend.text = element_text(size = 15))
-comparison_plt_3
-ggsave("comparison_plt_3.pdf", width = 30, height = 20, units = "cm")
-
-
-
